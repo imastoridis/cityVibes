@@ -1,4 +1,3 @@
-
 package com.cityVibes.model.entity;
 
 import jakarta.persistence.*;
@@ -7,29 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
 
-
 @Entity
-@Table(name = "city")
+@Table(name = "vibe")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuppressWarnings("unused")
-public class City {
+public class Vibe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String country;
+    private Boolean is_positive;
 
-    /* Vibes that belong to this city*/
-    @OneToMany(mappedBy = "city", cascade = {CascadeType.MERGE})
+    /* Cities that have this vibe*/
+    @OneToMany(mappedBy = "vibe", cascade = {CascadeType.MERGE})
     private Set<CityVibes> cityVibes;
 
-    /* Reviews that belong to this city*/
-    @OneToMany(mappedBy = "city")
-    private List<Review> reviews;
 }
