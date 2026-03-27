@@ -1,0 +1,35 @@
+# Build outputs
+target/
+build/
+*.jar
+*.war
+node_modules
+dist
+
+# IDE settings
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Git
+.git
+.gitignore
+
+# Docker
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Logs and temp files
+logs/
+*.log
+tmp/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+.env

@@ -1,0 +1,213 @@
+services:
+  # ---------------------------------------------
+  # FRONTEND PRODUCTION (Angular Application)
+  # ---------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: DockerFile
+      #target: production-stage
+    container_name: city-vibes-frontend
+    ports:
+      - "8088:80"
+
+    networks:
+      - backend_network
+
+    depends_on:
+      app-prod:
+        condition: service_started
+
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:80" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ---------------------------------------------
+  # FRONTEND (Development Mode with Live Reload)
+  # ---------------------------------------------
+  frontend-dev:
+    build:
+      context: ./frontend
+      dockerfile: DockerFile
+      target: build-stage
+    container_name: city-vibes-frontend-dev
+
+    # 1. Volume Mount: Mount local source code to container's working directory
+    # This enables instant sync and hot reloading
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+    # 2. Port: Expose the Angular development server's default port (4200)
+    ports:
+      - "4200:4200"
+
+    networks:
+      - backend_network
+
+    # 3. Command: Run the Angular Development Server
+    command: npm run start -- --host 0.0.0.0 --poll 500
+
+    depends_on:
+      app-dev:
+        condition: service_started
+
+  # ---------------------------------------------
+  # Spring Boot API Service (DEVELOPMENT Mode)
+  # ---------------------------------------------
+  app-dev:
+    build:
+      context: ./backend
+      dockerfile: DockerFile.dev
+    container_name: city-vibes-api-dev
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    environment:
+      SPRING_PROFILES_ACTIVE: "docker"
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      PROMETHEUS_USER: ${PROMETHEUS_USER}
+      PROMETHEUS_PASSWORD: ${PROMETHEUS_PASSWORD}
+      # Debugger enabled
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      MAVEN_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+    volumes:
+      # Mount the 'backend' folder to /app container path
+      - ./backend:/app
+      - ~/.m2:/root/.m2
+    networks:
+      backend_network:
+        aliases:
+          - backend
+
+    # Use fully qualified maven goal
+    command: sh -c "/usr/local/bin/wait-for-it.sh db 5432 -- /usr/local/bin/wait-for-it.sh redis 6379 -- mvn spring-boot:run -Dspring-boot.run.profiles=docker"
+  # ---------------------------------------------
+  # Spring Boot API Service (PRODUCTION Mode)
+  # ---------------------------------------------
+  app-prod:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: city-vibes-api-prod
+    ports:
+      - "8081:8080"
+    environment:
+      JAVA_OPTS: "-Xmx1024m -Xms512m"
+      SPRING_PROFILES_ACTIVE: "docker"
+      # DB Connection
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      #Prometheus Metrics
+      SPRING_SECURITY_USER_NAME: ${PROMETHEUS_USER}
+      SPRING_SECURITY_USER_PASSWORD: ${PROMETHEUS_PASSWORD}
+      # Caching
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+    networks:
+      backend_network:
+        aliases:
+          - backend
+
+  # ---------------------------------------------
+  # PostgreSQL Database Service
+  # ---------------------------------------------
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------
+  # Redis Caching Service
+  # ---------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: city-vibes-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend_network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+      start_period: 2s
+
+  # ---------------------------------------------
+  # Metrics
+  # ---------------------------------------------
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "127.0.0.1:9090:9090"
+    networks:
+      - backend_network
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    depends_on:
+      - prometheus
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:

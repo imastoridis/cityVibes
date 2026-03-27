@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": ["vitest/globals", "node"],
+    "baseUrl": "./",
+    "target": "es2022",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@analogjs/vitest-angular/setup-testbed": [
+        "node_modules/@analogjs/vitest-angular/setup-testbed.js"
+      ]
+    }
+  },
+  "files": ["src/test.setup.ts"],
+  "include": ["src/**/*.d.ts", "src/**/*.spec.ts"]
+}
