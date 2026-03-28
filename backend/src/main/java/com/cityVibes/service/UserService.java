@@ -1,4 +1,4 @@
 package com.cityVibes.service;
 
-public class UserService {
+public interface UserService {
 }
