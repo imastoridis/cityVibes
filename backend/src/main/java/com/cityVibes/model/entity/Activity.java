@@ -16,29 +16,17 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuppressWarnings("unused")
-public class Review {
+
+public class Activity {
     @Id
     @GeneratedValue
     private Long id;
-    private String review;
-    private Integer rating;
+    private String activity;
 
-    /* User that wrote the review*/
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
-
-    /* City that the review belongs to*/
+    /* City that has this activity */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private City city;
-
-    /* Photos that belong to this review*/
-    @OneToMany(mappedBy = "photo")
-    private List<Photo> photos;
-
-    private LocalDateTime createdAt = LocalDateTime.now();
 
 }

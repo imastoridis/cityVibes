@@ -32,4 +32,12 @@ public class City {
     /* Reviews that belong to this city*/
     @OneToMany(mappedBy = "city")
     private List<Review> reviews;
+
+    /* Photos that belong to this city*/
+    @OneToMany(mappedBy = "photo")
+    private List<Photo> photos;
+
+    /* Activities that belong to this city*/
+    @OneToMany(mappedBy = "activity")
+    private List<Activity> activities;
 }
