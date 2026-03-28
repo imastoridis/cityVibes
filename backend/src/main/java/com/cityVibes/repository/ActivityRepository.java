@@ -1,4 +1,9 @@
 package com.cityVibes.repository;
+import com.cityVibes.model.entity.Activity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class ActivityRepository {
+@Repository
+public interface ActivityRepository extends JpaRepository<Activity, Long> {
+
 }

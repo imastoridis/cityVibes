@@ -1,4 +1,9 @@
 package com.cityVibes.repository;
+import com.cityVibes.model.entity.Photo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class PhotoRepository {
+@Repository
+public interface PhotoRepository extends JpaRepository<Photo, Long> {
+
 }
