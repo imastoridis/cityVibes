@@ -30,7 +30,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE})
     private Set<CityVibes> cityVibes;
 
-    /* Reviews that belongs to this user*/
+    /* Reviews that belong to this user*/
     @OneToMany(mappedBy = "user")
     private List<Review> reviews;
 }

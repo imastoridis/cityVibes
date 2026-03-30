@@ -23,20 +23,20 @@ public class Review {
     private String review;
     private Integer rating;
 
-    /* User that wrote the review*/
+    /* Many reviews can belong to one user*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    /* City that the review belongs to*/
+    /* Many reviews can belong to one city*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private City city;
 
-    /* Photos that belong to this review*/
-    @OneToMany(mappedBy = "photo")
+    /* Photos that belong to a review */
+    @OneToMany(mappedBy = "review")
     private List<Photo> photos;
 
     private LocalDateTime createdAt = LocalDateTime.now();

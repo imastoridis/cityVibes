@@ -23,7 +23,7 @@ public class Activity {
     private Long id;
     private String activity;
 
-    /* City that has this activity */
+    /* Many activities can belong to one city*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

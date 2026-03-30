@@ -22,7 +22,7 @@ public class Vibe {
     private String name;
     private Boolean is_positive;
 
-    /* Cities that have this vibe*/
+    /* Many vibes can belong to one city*/
     @OneToMany(mappedBy = "vibe", cascade = {CascadeType.MERGE})
     private Set<CityVibes> cityVibes;
 

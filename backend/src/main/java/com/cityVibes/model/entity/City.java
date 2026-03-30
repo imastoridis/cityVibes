@@ -25,19 +25,19 @@ public class City {
     private String name;
     private String country;
 
-    /* Vibes that belong to this city*/
+    /* Vibe that belongs to a city*/
     @OneToMany(mappedBy = "city", cascade = {CascadeType.MERGE})
     private Set<CityVibes> cityVibes;
 
-    /* Reviews that belong to this city*/
+    /* Reviews that belong to a city*/
     @OneToMany(mappedBy = "city")
     private List<Review> reviews;
 
-    /* Photos that belong to this city*/
-    @OneToMany(mappedBy = "photo")
+    /* Photos that belong to a city*/
+    @OneToMany(mappedBy = "city")
     private List<Photo> photos;
 
-    /* Activities that belong to this city*/
-    @OneToMany(mappedBy = "activity")
+    /* Activities that belong to a city*/
+    @OneToMany(mappedBy = "city")
     private List<Activity> activities;
 }

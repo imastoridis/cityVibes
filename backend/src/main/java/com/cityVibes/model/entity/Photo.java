@@ -28,14 +28,13 @@ public class Photo {
 
     private Long fileSize;
 
-    // RELATIONSHIPS
-    // Many photos can belong to one City
+    /* Many photos can belong to one city*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private City city;
 
-    // Many photos can belong to one Review
+    /* Many photos can belong to one review*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
