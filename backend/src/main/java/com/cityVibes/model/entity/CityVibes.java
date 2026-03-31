@@ -37,8 +37,8 @@ public class CityVibes {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Vibe vibe;
 
-    @PrePersist
+/*    @PrePersist
     protected void onCreate() {
         LocalDateTime createdAt = LocalDateTime.now();
-    }
+    }*/
 }

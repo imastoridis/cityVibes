@@ -1,6 +1,93 @@
 package com.cityVibes.service.impl;
+
+import com.cityVibes.dto.ReviewDto;
+import com.cityVibes.dto.projection.ReviewSummary;
+import com.cityVibes.mapper.ReviewMapper;
+import com.cityVibes.model.entity.City;
+import com.cityVibes.model.entity.Review;
+import com.cityVibes.model.entity.User;
+import com.cityVibes.repository.CityRepository;
+import com.cityVibes.repository.ReviewRepository;
+import com.cityVibes.repository.UserRepository;
+import com.cityVibes.service.ReviewService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
-public class ReviewServiceImpl {
+@SuppressWarnings("unused")
+public class ReviewServiceImpl implements ReviewService {
+    private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+    private final CityRepository cityRepository;
+
+    public ReviewServiceImpl(
+            ReviewRepository reviewRepository,
+            UserRepository userRepository,
+            CityRepository cityRepository
+    ) {
+        this.reviewRepository = reviewRepository;
+        this.userRepository = userRepository;
+        this.cityRepository = cityRepository;
+    }
+
+    /**
+     * Get review by id
+     *
+     * @param id - id of the review
+     * @return review with id
+     */
+    @Override
+    public ReviewSummary findReviewById(Long id) {
+        return reviewRepository.findProjectedById(id);
+    }
+
+
+    /**
+     * Create review
+     *
+     * @param id - id of the review
+     * @return review with id
+     */
+    @Override
+    @Transactional
+    public ReviewDto createReview(ReviewDto reviewDto, Long id) {
+        User user = userRepository.findUserById(id);
+        City city = cityRepository.findCityById(1L);
+
+        Review newReview = ReviewMapper.toEntity(reviewDto, user, city);
+        reviewRepository.save(newReview);
+
+        return ReviewMapper.toDto(newReview);
+    }
+
+    /**
+     * Update review
+     *
+     * @param reviewDto - modified review
+     */
+    @Override
+    @Transactional
+    public void updateReview(ReviewDto reviewDto) {
+        Review review = reviewRepository.findReviewById(reviewDto.getId());
+
+        review.setRating(reviewDto.getRating());
+        review.setReview(reviewDto.getReview());
+        review.setUpdatedAt(LocalDateTime.now());
+
+        reviewRepository.save(review);
+    }
+
+    /**
+     * Delete review
+     *
+     * @param id - id of the review
+     */
+    @Override
+    @Transactional
+    public void deleteReview(Long id) {
+        Review review = reviewRepository.findReviewById(id);
+        reviewRepository.delete(review);
+    }
 }

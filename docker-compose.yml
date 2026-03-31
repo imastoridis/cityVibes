@@ -66,6 +66,7 @@ services:
       - "8080:8080"
       - "5005:5005"
     environment:
+      TZ : Europe/Paris
       SPRING_PROFILES_ACTIVE: "docker"
       UPLOAD_DIR: /app/uploads
       SPRING_DEVTOOLS_RESTART_ENABLED: true
@@ -80,7 +81,7 @@ services:
       # Caching
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
-      MAVEN_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+      #MAVEN_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
     depends_on:
       db:
         condition: service_healthy
@@ -96,9 +97,9 @@ services:
       backend_network:
         aliases:
           - backend
+    command: sh -c "/usr/local/bin/wait-for-it.sh db 5432 -- /usr/local/bin/wait-for-it.sh redis 6379 -- mvn spring-boot:run -Dspring-boot.run.profiles=docker -Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Duser.timezone=Europe/Paris'"
 
-    # Use fully qualified maven goal
-    command: sh -c "/usr/local/bin/wait-for-it.sh db 5432 -- /usr/local/bin/wait-for-it.sh redis 6379 -- mvn spring-boot:run -Dspring-boot.run.profiles=docker"
+    # command: sh -c "/usr/local/bin/wait-for-it.sh db 5432 -- /usr/local/bin/wait-for-it.sh redis 6379 -- mvn spring-boot:run -Dspring-boot.run.profiles=docker"
   # ---------------------------------------------
   # Spring Boot API Service (PRODUCTION Mode)
   # ---------------------------------------------
@@ -110,6 +111,7 @@ services:
     ports:
       - "8081:8080"
     environment:
+      TZ : Europe/Paris
       JAVA_OPTS: "-Xmx1024m -Xms512m"
       SPRING_PROFILES_ACTIVE: "docker"
       UPLOAD_DIR: /app/uploads

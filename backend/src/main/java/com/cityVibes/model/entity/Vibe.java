@@ -20,7 +20,7 @@ public class Vibe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Boolean is_positive;
+    private Boolean isPositive;
 
     /* Many vibes can belong to one city*/
     @OneToMany(mappedBy = "vibe", cascade = {CascadeType.MERGE})

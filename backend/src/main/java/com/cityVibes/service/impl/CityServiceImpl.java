@@ -1,6 +1,6 @@
 package com.cityVibes.service.impl;
 
-import com.cityVibes.dto.CitySummary;
+import com.cityVibes.dto.projection.CitySummary;
 import com.cityVibes.repository.CityRepository;
 import com.cityVibes.service.CityService;
 import org.springframework.stereotype.Service;

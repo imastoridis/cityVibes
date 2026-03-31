@@ -1,7 +1,7 @@
 package com.cityVibes.service;
 
 
-import com.cityVibes.dto.CitySummary;
+import com.cityVibes.dto.projection.CitySummary;
 
 import java.util.List;
 
