@@ -2,7 +2,7 @@ package com.cityVibes.controller;
 
 import com.cityVibes.dto.ApiResponse;
 import com.cityVibes.dto.UserDto;
-import com.cityVibes.dto.projection.UserSummary;
+import com.cityVibes.dto.record.UserRecord;
 import com.cityVibes.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +26,10 @@ public class UserController {
      * @return A user
      */
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<UserSummary>> findUser(
+    public ResponseEntity<ApiResponse<UserRecord>> findUser(
             @PathVariable Long id
     ) {
-        UserSummary data = userService.findUserById(id);
+        UserRecord data = userService.findUserById(id);
         return ResponseEntity.ok(ApiResponse.success(data, "User details retrieved"));
     }
 

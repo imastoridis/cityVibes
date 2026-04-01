@@ -1,7 +1,7 @@
 package com.cityVibes.service;
 
 import com.cityVibes.dto.ReviewDto;
-import com.cityVibes.dto.projection.ReviewSummary;
+import com.cityVibes.dto.record.ReviewRecord;
 
 public interface ReviewService {
 
@@ -12,7 +12,7 @@ public interface ReviewService {
      * @return review with id
      *
      */
-    ReviewSummary findReviewById(Long id);
+    ReviewRecord findReviewById(Long id);
 
 
     /**

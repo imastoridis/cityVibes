@@ -1,8 +1,9 @@
 package com.cityVibes.service.impl;
 
-import com.cityVibes.dto.projection.CitySummary;
+import com.cityVibes.dto.record.CityRecord;
 import com.cityVibes.repository.CityRepository;
 import com.cityVibes.service.CityService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,8 @@ public class CityServiceImpl implements CityService {
      * @return List of all cities
      */
     @Override
-    public List<CitySummary> findAllCities() {
+    @Cacheable(value = "list_cities", key = "'all_cities'")
+    public List<CityRecord> findAllCities() {
         return cityRepository.findAllBy();
     }
 
@@ -32,7 +34,8 @@ public class CityServiceImpl implements CityService {
      * @return City with id
      */
     @Override
-    public CitySummary findCityById(Long id) {
+    @Cacheable(value = "one_city", key = "#id")
+    public CityRecord findCityById(Long id) {
         // Here you could throw a custom ResourceNotFoundException if it's null
         return cityRepository.findProjectedById(id);
     }

@@ -1,7 +1,6 @@
 package com.cityVibes.repository;
 
-import com.cityVibes.dto.ReviewDto;
-import com.cityVibes.dto.projection.ReviewSummary;
+import com.cityVibes.dto.record.ReviewRecord;
 import com.cityVibes.model.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,7 +13,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
      * @return projection
      *
      */
-    ReviewSummary findProjectedById(Long id);
+    ReviewRecord findProjectedById(Long id);
 
     /**
      * @param id - id of the review

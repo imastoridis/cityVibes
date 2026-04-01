@@ -1,6 +1,6 @@
 package com.cityVibes.repository;
 
-import com.cityVibes.dto.projection.UserSummary;
+import com.cityVibes.dto.record.UserRecord;
 import com.cityVibes.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return projection
      *
      */
-    UserSummary findProjectedById(Long id);
+    UserRecord findProjectedById(Long id);
 
     /**
      * @param id - id of the user

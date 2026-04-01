@@ -1,8 +1,7 @@
 package com.cityVibes.repository;
 
-import com.cityVibes.dto.projection.CitySummary;
+import com.cityVibes.dto.record.CityRecord;
 import com.cityVibes.model.entity.City;
-import com.cityVibes.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,12 +23,12 @@ public interface CityRepository extends JpaRepository<City, Long> {
      * @return City projection
      *
      */
-    CitySummary findProjectedById(Long id);
+    CityRecord findProjectedById(Long id);
 
     /**
      * @return List of all cities
      *
      */
-    List<CitySummary> findAllBy();
+    List<CityRecord> findAllBy();
 
 }

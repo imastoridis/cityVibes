@@ -1,7 +1,7 @@
 package com.cityVibes.service.impl;
 
 import com.cityVibes.dto.UserDto;
-import com.cityVibes.dto.projection.UserSummary;
+import com.cityVibes.dto.record.UserRecord;
 import com.cityVibes.exception.DuplicateResourceException;
 import com.cityVibes.mapper.UserMapper;
 import com.cityVibes.model.entity.User;
@@ -9,8 +9,6 @@ import com.cityVibes.repository.UserRepository;
 import com.cityVibes.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 @Service
 @SuppressWarnings("unused")
@@ -30,7 +28,7 @@ public class UserServiceImpl implements UserService {
      * @return user with id
      */
     @Override
-    public UserSummary findUserById(Long id) {
+    public UserRecord findUserById(Long id) {
         return userRepository.findProjectedById(id);
     }
 

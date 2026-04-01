@@ -1,7 +1,7 @@
 package com.cityVibes.service;
 
 
-import com.cityVibes.dto.projection.CitySummary;
+import com.cityVibes.dto.record.CityRecord;
 
 import java.util.List;
 
@@ -14,12 +14,12 @@ public interface CityService {
      * @return City with id
      *
      */
-    CitySummary findCityById(Long id);
+    CityRecord findCityById(Long id);
 
     /**
      * Get all cities
      *
      * @return List of all cities
      */
-    List<CitySummary> findAllCities();
+    List<CityRecord> findAllCities();
 }

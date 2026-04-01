@@ -1,7 +1,7 @@
 package com.cityVibes.service.impl;
 
 import com.cityVibes.dto.ReviewDto;
-import com.cityVibes.dto.projection.ReviewSummary;
+import com.cityVibes.dto.record.ReviewRecord;
 import com.cityVibes.mapper.ReviewMapper;
 import com.cityVibes.model.entity.City;
 import com.cityVibes.model.entity.Review;
@@ -10,8 +10,10 @@ import com.cityVibes.repository.CityRepository;
 import com.cityVibes.repository.ReviewRepository;
 import com.cityVibes.repository.UserRepository;
 import com.cityVibes.service.ReviewService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.cityVibes.annotation.EvictReviewCache;
 
 import java.time.LocalDateTime;
 
@@ -39,21 +41,22 @@ public class ReviewServiceImpl implements ReviewService {
      * @return review with id
      */
     @Override
-    public ReviewSummary findReviewById(Long id) {
+    @Cacheable(value = "one_review", key = "#id")
+    public ReviewRecord findReviewById(Long id) {
         return reviewRepository.findProjectedById(id);
     }
-
 
     /**
      * Create review
      *
-     * @param id - id of the review
+     * @param userId - id of the review
      * @return review with id
      */
     @Override
     @Transactional
-    public ReviewDto createReview(ReviewDto reviewDto, Long id) {
-        User user = userRepository.findUserById(id);
+    @EvictReviewCache
+    public ReviewDto createReview(ReviewDto reviewDto, Long userId) {
+        User user = userRepository.findUserById(userId);
         City city = cityRepository.findCityById(1L);
 
         Review newReview = ReviewMapper.toEntity(reviewDto, user, city);
@@ -69,6 +72,7 @@ public class ReviewServiceImpl implements ReviewService {
      */
     @Override
     @Transactional
+    @EvictReviewCache
     public void updateReview(ReviewDto reviewDto) {
         Review review = reviewRepository.findReviewById(reviewDto.getId());
 
@@ -86,6 +90,7 @@ public class ReviewServiceImpl implements ReviewService {
      */
     @Override
     @Transactional
+    @EvictReviewCache
     public void deleteReview(Long id) {
         Review review = reviewRepository.findReviewById(id);
         reviewRepository.delete(review);

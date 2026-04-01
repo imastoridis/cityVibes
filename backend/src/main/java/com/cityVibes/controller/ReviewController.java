@@ -2,7 +2,7 @@ package com.cityVibes.controller;
 
 import com.cityVibes.dto.ApiResponse;
 import com.cityVibes.dto.ReviewDto;
-import com.cityVibes.dto.projection.ReviewSummary;
+import com.cityVibes.dto.record.ReviewRecord;
 import com.cityVibes.service.ReviewService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +26,10 @@ public class ReviewController {
      * @return A review
      */
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ReviewSummary>> findReview(
+    public ResponseEntity<ApiResponse<ReviewRecord>> findReview(
             @PathVariable Long id
     ) {
-        ReviewSummary data = reviewService.findReviewById(id);
+        ReviewRecord data = reviewService.findReviewById(id);
         return ResponseEntity.ok(ApiResponse.success(data, "Review details retrieved"));
     }
 

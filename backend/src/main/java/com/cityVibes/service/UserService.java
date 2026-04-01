@@ -1,7 +1,7 @@
 package com.cityVibes.service;
 
 import com.cityVibes.dto.UserDto;
-import com.cityVibes.dto.projection.UserSummary;
+import com.cityVibes.dto.record.UserRecord;
 
 public interface UserService {
 
@@ -13,7 +13,7 @@ public interface UserService {
      * @return user with id
      *
      */
-    UserSummary findUserById(Long id);
+    UserRecord findUserById(Long id);
 
 
     /**
