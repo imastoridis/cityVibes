@@ -3,6 +3,7 @@ package com.cityVibes.controller;
 import com.cityVibes.dto.ApiResponse;
 import com.cityVibes.dto.UserDto;
 import com.cityVibes.dto.record.UserRecord;
+import com.cityVibes.model.entity.User;
 import com.cityVibes.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class UserController {
      * @param userDto - user to create
      * @return A user
      */
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<ApiResponse<UserDto>> createUser(
             @Valid @RequestBody UserDto userDto
     ) {

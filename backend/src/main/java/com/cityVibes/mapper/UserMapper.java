@@ -1,7 +1,6 @@
 package com.cityVibes.mapper;
 
 import com.cityVibes.dto.UserDto;
-import com.cityVibes.model.entity.City;
 import com.cityVibes.model.entity.User;
 
 public class UserMapper {

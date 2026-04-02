@@ -1,4 +1,4 @@
-package com.cityVibes.annotation;
+package com.cityVibes.annotation.vibe;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
@@ -14,9 +14,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Caching(evict = {
-        @CacheEvict(value = "one_review", key = "#id", condition = "#id != null"),
-        @CacheEvict(value = "one_review", key = "#reviewDto.id", condition = "#reviewDto != null"),
-        @CacheEvict(value = "all_reviews", allEntries = true),
+        @CacheEvict(value = "all_vibes", allEntries = true),
 })
-public @interface EvictReviewCache {
+public @interface EvictAllVibeCache {
 }

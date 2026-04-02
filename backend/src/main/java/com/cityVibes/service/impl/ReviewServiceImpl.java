@@ -1,5 +1,6 @@
 package com.cityVibes.service.impl;
 
+import com.cityVibes.annotation.review.EvictOneReviewCache;
 import com.cityVibes.dto.ReviewDto;
 import com.cityVibes.dto.record.ReviewRecord;
 import com.cityVibes.mapper.ReviewMapper;
@@ -13,7 +14,7 @@ import com.cityVibes.service.ReviewService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.cityVibes.annotation.EvictReviewCache;
+import com.cityVibes.annotation.review.EvictAllReviewCache;
 
 import java.time.LocalDateTime;
 
@@ -50,14 +51,15 @@ public class ReviewServiceImpl implements ReviewService {
      * Create review
      *
      * @param userId - id of the review
+     * @param reviewDto - review data
      * @return review with id
      */
     @Override
     @Transactional
-    @EvictReviewCache
+    @EvictAllReviewCache
     public ReviewDto createReview(ReviewDto reviewDto, Long userId) {
         User user = userRepository.findUserById(userId);
-        City city = cityRepository.findCityById(1L);
+        City city = cityRepository.findCityById(reviewDto.getCityId());
 
         Review newReview = ReviewMapper.toEntity(reviewDto, user, city);
         reviewRepository.save(newReview);
@@ -72,7 +74,8 @@ public class ReviewServiceImpl implements ReviewService {
      */
     @Override
     @Transactional
-    @EvictReviewCache
+    @EvictAllReviewCache
+    @EvictOneReviewCache
     public void updateReview(ReviewDto reviewDto) {
         Review review = reviewRepository.findReviewById(reviewDto.getId());
 
@@ -90,7 +93,8 @@ public class ReviewServiceImpl implements ReviewService {
      */
     @Override
     @Transactional
-    @EvictReviewCache
+    @EvictAllReviewCache
+    @EvictOneReviewCache
     public void deleteReview(Long id) {
         Review review = reviewRepository.findReviewById(id);
         reviewRepository.delete(review);

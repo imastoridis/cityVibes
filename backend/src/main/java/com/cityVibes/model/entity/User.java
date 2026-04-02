@@ -39,11 +39,11 @@ public class User {
     private String passwordHash;
 
     /* Vibe that belongs to this user*/
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE})
+    @OneToMany(mappedBy = "users", cascade = {CascadeType.MERGE})
     private Set<CityVibes> cityVibes;
 
     /* Reviews that belong to this user*/
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "users")
     private List<Review> reviews;
 
     @CreatedDate

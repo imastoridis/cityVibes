@@ -15,7 +15,6 @@ public interface UserService {
      */
     UserRecord findUserById(Long id);
 
-
     /**
      * Create user
      *

@@ -14,7 +14,6 @@ public interface ReviewService {
      */
     ReviewRecord findReviewById(Long id);
 
-
     /**
      * Create review
      *

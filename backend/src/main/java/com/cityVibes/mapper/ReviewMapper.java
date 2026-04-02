@@ -15,9 +15,10 @@ public class ReviewMapper {
         dto.setId(review.getId());
         dto.setReview(review.getReview());
         dto.setRating(review.getRating());
-        dto.setUserId(review.getUser().getId());
+        dto.setUserId(review.getUsers().getId());
         dto.setCityId(review.getCity().getId());
         dto.setCreatedAt(review.getCreatedAt());
+        dto.setUpdatedAt(review.getUpdatedAt());
         return dto;
     }
 
@@ -29,9 +30,10 @@ public class ReviewMapper {
         Review review = new Review();
         review.setReview(reviewDto.getReview());
         review.setRating(reviewDto.getRating());
-        review.setUser(user);
+        review.setUsers(user);
         review.setCity(city);
         review.setCreatedAt(reviewDto.getCreatedAt());
+        review.setUpdatedAt(reviewDto.getCreatedAt());
         return review;
     }
 

@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "review")
@@ -24,14 +23,17 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String review;
+    @Column(nullable = false)
     private Integer rating;
 
     /* Many reviews can belong to one user*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
+    private User users;
 
     /* Many reviews can belong to one city*/
     @ManyToOne(fetch = FetchType.LAZY)

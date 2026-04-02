@@ -10,7 +10,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     /**
      * @param id - id of the review
-     * @return projection
+     * @return record
      *
      */
     ReviewRecord findProjectedById(Long id);

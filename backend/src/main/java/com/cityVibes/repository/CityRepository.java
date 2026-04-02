@@ -20,7 +20,7 @@ public interface CityRepository extends JpaRepository<City, Long> {
 
     /**
      * @param id - id of the city
-     * @return City projection
+     * @return City record
      *
      */
     CityRecord findProjectedById(Long id);

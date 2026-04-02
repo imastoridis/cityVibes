@@ -33,18 +33,17 @@ public class ReviewController {
         return ResponseEntity.ok(ApiResponse.success(data, "Review details retrieved"));
     }
 
-
     /**
      * POST /api/review: Create one review
      *
      * @param reviewDto - review to create
      * @return A review
      */
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<ApiResponse<ReviewDto>> createReview(
             @Valid @RequestBody ReviewDto reviewDto
     ) {
-        Long userId = 1L;
+        Long userId = 2L;
         ReviewDto data = reviewService.createReview(reviewDto, userId);
         return ResponseEntity.ok(ApiResponse.success(data, "Review created"));
     }

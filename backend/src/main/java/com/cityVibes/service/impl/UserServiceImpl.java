@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findProjectedById(id);
     }
 
-
     /**
      * Create user
      *
@@ -42,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto createUser(UserDto userDto) {
-        User user = userRepository.findUserByUsername(userDto.getUsername());
+        UserRecord user = userRepository.findUserByUsername(userDto.getUsername().replaceAll("\\s+", ""));
 
         if (user == null) {
             User newUser = UserMapper.toEntity(userDto);
@@ -50,7 +49,7 @@ public class UserServiceImpl implements UserService {
             return UserMapper.toDto(newUser);
         } else {
             throw new DuplicateResourceException(String.format(
-                    "Username '%s'  already exists, please choose another", userDto.getUsername()));
+                    "Username '%s' already exists, please choose another", userDto.getUsername()));
         }
     }
 
@@ -62,7 +61,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(UserDto userDto) {
-        User existingUser = userRepository.findUserByUsername(userDto.getUsername());
+        User existingUser = userRepository.findUserById(userDto.getId());
 
         existingUser.setEmail(userDto.getEmail());
         existingUser.setFirstName(userDto.getFirstName());

@@ -9,10 +9,17 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Long> {
     /**
      * @param id - id of the user
-     * @return projection
+     * @return record
      *
      */
     UserRecord findProjectedById(Long id);
+
+    /**
+     * @param username - username of the user
+     * @return record
+     *
+     */
+    UserRecord findUserByUsername(String username);
 
     /**
      * @param id - id of the user
@@ -21,10 +28,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     User findUserById(Long id);
 
-    /**
-     * @param username - username of the user
-     * @return entity
-     *
-     */
-    User findUserByUsername(String username);
+
 }
