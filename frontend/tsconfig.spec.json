@@ -5,6 +5,7 @@
     "types": ["vitest/globals", "node"],
     "baseUrl": "./",
     "target": "es2022",
+    "composite": true,
     "paths": {
       "@app/*": ["src/app/*"],
       "@shared/*": ["src/app/shared/*"],

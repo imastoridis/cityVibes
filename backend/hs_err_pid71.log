@@ -39,8 +39,8 @@ j  org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWi
 j  org.springframework.transaction.interceptor.TransactionInterceptor.invoke(Lorg/aopalliance/intercept/MethodInvocation;)Ljava/lang/Object;+40
 j  org.springframework.aop.framework.ReflectiveMethodInvocation.proceed()Ljava/lang/Object;+120
 j  org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(Ljava/lang/Object;Ljava/lang/reflect/Method;[Ljava/lang/Object;Lorg/springframework/cglib/proxy/MethodProxy;)Ljava/lang/Object;+120
-j  com.cityVibes.service.impl.UserServiceImpl$$SpringCGLIB$$0.updateUser(Lcom/cityVibes/dto/UserDto;)V+36
-j  com.cityVibes.controller.UserController.updateUser(Lcom/cityVibes/dto/UserDto;)Lorg/springframework/http/ResponseEntity;+5
+j  com.cityVibes.auth.user.UserServiceImpl$$SpringCGLIB$$0.updateUser(Lcom/cityVibes/dto/UserDto;)V+36
+j  com.cityVibes.auth.user.UserController.updateUser(Lcom/cityVibes/dto/UserDto;)Lorg/springframework/http/ResponseEntity;+5
 j  java.lang.invoke.LambdaForm$DMH+0x00007f762e134000.invokeVirtual(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;+11 java.base@21.0.3
 j  java.lang.invoke.LambdaForm$MH+0x00007f762e334000.invoke(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;+52 java.base@21.0.3
 J 4028 c1 jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object; java.base@21.0.3 (92 bytes) @ 0x00007f7677d3eefc [0x00007f7677d3eb40+0x00000000000003bc]
@@ -144,7 +144,7 @@ Register to memory mapping:
 
 RAX=0x00007f76773ae76e is at code_begin+2574 in an Interpreter codelet
 return entry points  [0x00007f76773add60, 0x00007f76773af690]  6448 bytes
-RBX=0x000000071120e7e0 is an oop: com.cityVibes.dto.UserDto 
+RBX=0x000000071120e7e0 is an oop: com.cityVibes.auth.user.dto.UserDto
 {0x000000071120e7e0} - klass: 'com/cityVibes/dto/UserDto'
  - ---- fields (total size 6 words):
  - private 'id' 'Ljava/lang/Long;' @12  a 'java/lang/Long'{0x000000070da88620} = 1 (0xe1b510c4)
@@ -243,7 +243,7 @@ Stack slot to memory mapping:
 
 stack at sp + 0 slots: 0x00007f76773ae76e is at code_begin+2574 in an Interpreter codelet
 return entry points  [0x00007f76773add60, 0x00007f76773af690]  6448 bytes
-stack at sp + 1 slots: 0x000000071c20b6a8 is an oop: com.cityVibes.service.impl.UserServiceImpl 
+stack at sp + 1 slots: 0x000000071c20b6a8 is an oop: com.cityVibes.auth.user.UserServiceImpl
 {0x000000071c20b6a8} - klass: 'com/cityVibes/service/impl/UserServiceImpl'
  - ---- fields (total size 2 words):
  - private final 'userRepository' 'Lcom/cityVibes/repository/UserRepository;' @12  a 'jdk/proxy7/$Proxy213'{0x00000007fff37c10} (0xfffe6f82)

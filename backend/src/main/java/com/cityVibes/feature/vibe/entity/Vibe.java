@@ -1,0 +1,34 @@
+package com.cityVibes.feature.vibe.entity;
+
+import com.cityVibes.feature.cityvibe.entity.Cityvibe;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Set;
+
+@Entity
+@Table(name = "vibe")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuppressWarnings("unused")
+public class Vibe {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true, nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private Boolean isPositive;
+
+    /* Many vibes can belong to one city*/
+    @OneToMany(mappedBy = "vibe", cascade = {CascadeType.MERGE})
+    private Set<Cityvibe> cityvibe;
+
+}

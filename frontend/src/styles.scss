@@ -1,0 +1,54 @@
+
+/* src/styles.scss */
+
+@use '@angular/material' as mat;
+
+// 3. Load your theme
+@use './custom-theme.scss';
+
+// 2. Load Tailwind 4 using the CSS @import (the new standard for v4)
+@use 'tailwindcss';
+
+// 4. Include Material Core
+@include mat.core();
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.valid-green-border {
+  --mat-mdc-form-field-outline-color: #10b981 !important;
+}
+
+.invalid-red-border {
+  --mat-mdc-form-field-outline-color: red !important;
+}
+
+/* Bold on all footers of mat-table*/
+tr.mat-mdc-footer-row td {
+  font-weight: bold;
+}
+
+/* Scrollbar */
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6699ff #f0f0f5;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f0f0f5;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #6699ff;
+  border-radius: 20px;
+  border: 3px solid #f0f0f5;
+}
