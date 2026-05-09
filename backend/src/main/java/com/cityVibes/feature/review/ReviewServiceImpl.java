@@ -3,7 +3,7 @@ package com.cityVibes.feature.review;
 import com.cityVibes.annotation.review.EvictOneReviewCache;
 import com.cityVibes.feature.review.dto.ReviewDto;
 import com.cityVibes.feature.review.dto.ReviewRecord;
-import com.cityVibes.feature.review.mapper.ReviewMapper;
+import com.cityVibes.feature.review.mapper.ReviewMapperOld;
 import com.cityVibes.feature.city.entity.City;
 import com.cityVibes.feature.review.entity.Review;
 import com.cityVibes.common.user.entity.User;
@@ -59,10 +59,10 @@ public class ReviewServiceImpl implements ReviewService {
         User user = userRepository.findUserById(userId);
         City city = cityRepository.findCityById(reviewDto.getCityId());
 
-        Review newReview = ReviewMapper.toEntity(reviewDto, user, city);
+        Review newReview = ReviewMapperOld.toEntity(reviewDto, user, city);
         reviewRepository.save(newReview);
 
-        return ReviewMapper.toDto(newReview);
+        return ReviewMapperOld.toDto(newReview);
     }
 
     /**

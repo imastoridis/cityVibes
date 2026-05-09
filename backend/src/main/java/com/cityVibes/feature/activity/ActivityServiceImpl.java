@@ -3,6 +3,9 @@ package com.cityVibes.feature.activity;
 import com.cityVibes.annotation.activity.EvictAllActivityCache;
 import com.cityVibes.annotation.activity.EvictOneActivityCache;
 import com.cityVibes.feature.activity.dto.request.ActivityRequest;
+import com.cityVibes.feature.activity.dto.request.ActivityRequestCultureRecord;
+import com.cityVibes.feature.activity.dto.request.ActivityRequestFoodRecord;
+import com.cityVibes.feature.activity.dto.request.ActivityRequestOutdoorRecord;
 import com.cityVibes.feature.activity.dto.response.ActivityResponse;
 import com.cityVibes.feature.activity.mapper.ActivityMapper;
 import com.cityVibes.feature.city.entity.City;
@@ -45,7 +48,7 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     /**
-     * Create activity
+     * Create new activity
      *
      * @param request - Activity data
      * @return activity entity
@@ -58,18 +61,18 @@ public class ActivityServiceImpl implements ActivityService {
                 .orElseThrow(() -> new EntityNotFoundException("City not found"));
 
         Activity entity = switch (request) {
-            case ActivityRequest.Food f -> {
+            case ActivityRequestFoodRecord f -> {
                 FoodActivity food = new FoodActivity();
                 food.setCuisineType(f.cuisineType());
                 food.setAveragePrice(f.averagePrice());
                 yield food;
             }
-            case ActivityRequest.Outdoor o -> {
+            case ActivityRequestOutdoorRecord o -> {
                 OutdoorActivity outdoor = new OutdoorActivity();
                 outdoor.setDifficulty(o.difficulty());
                 yield outdoor;
             }
-            case ActivityRequest.Culture c -> {
+            case ActivityRequestCultureRecord c -> {
                 CultureActivity culture = new CultureActivity();
                 culture.setTheme(c.theme());
                 yield culture;
@@ -100,13 +103,13 @@ public class ActivityServiceImpl implements ActivityService {
         activity.setActivity(request.activity());
 
         switch (request) {
-            case ActivityRequest.Food f when activity instanceof FoodActivity food -> {
+            case ActivityRequestFoodRecord f when activity instanceof FoodActivity food -> {
                 food.setCuisineType(f.cuisineType());
                 food.setAveragePrice(f.averagePrice());
             }
-            case ActivityRequest.Outdoor o when activity instanceof OutdoorActivity outdoor ->
+            case ActivityRequestOutdoorRecord o when activity instanceof OutdoorActivity outdoor ->
                     outdoor.setDifficulty(o.difficulty());
-            case ActivityRequest.Culture c when activity instanceof CultureActivity culture ->
+            case ActivityRequestCultureRecord c when activity instanceof CultureActivity culture ->
                     culture.setTheme(c.theme());
 
             default ->

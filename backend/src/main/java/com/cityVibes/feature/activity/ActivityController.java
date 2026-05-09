@@ -32,7 +32,6 @@ public class ActivityController {
         return ResponseEntity.ok(ApiResponse.success(data, "Activity details retrieved"));
     }
 
-
     /**
      * POST /api/activity: Create one activity
      *

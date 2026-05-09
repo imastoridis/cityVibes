@@ -1,40 +1,22 @@
 package com.cityVibes.feature.review.mapper;
 
-import com.cityVibes.feature.review.dto.ReviewDto;
-import com.cityVibes.feature.city.entity.City;
 import com.cityVibes.feature.review.entity.Review;
-import com.cityVibes.common.user.entity.User;
+import com.cityVibes.feature.review.dto.response.ReviewResponse;
+/*
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-public class ReviewMapper {
+@Mapper(componentModel = "spring") // Permet l'injection via @Autowired
+public interface ReviewMapper {
 
-    // Convert Entity to DTO
-    public static ReviewDto toDto(Review review) {
-        if (review == null) return null;
+    @Mapping(source = "users.id", target = "userId")
+    @Mapping(source = "users.username", target = "username")
+    @Mapping(source = "city.id", target = "cityId")
+    ReviewResponse toResponse(Review review);
 
-        ReviewDto dto = new ReviewDto();
-        dto.setId(review.getId());
-        dto.setReview(review.getReview());
-        dto.setRating(review.getRating());
-        dto.setUserId(review.getUsers().getId());
-        dto.setCityId(review.getCity().getId());
-        dto.setCreatedAt(review.getCreatedAt());
-        dto.setUpdatedAt(review.getUpdatedAt());
-        return dto;
-    }
-
-    // Convert DTO to Entity
-    public static Review toEntity(ReviewDto reviewDto, User user, City city) {
-
-        if (reviewDto == null) return null;
-
-        Review review = new Review();
-        review.setReview(reviewDto.getReview());
-        review.setRating(reviewDto.getRating());
-        review.setUsers(user);
-        review.setCity(city);
-        review.setCreatedAt(reviewDto.getCreatedAt());
-        review.setUpdatedAt(reviewDto.getCreatedAt());
-        return review;
-    }
-
-}
+    // Si tu as besoin de faire l'inverse pour la création
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "users", ignore = true) // À gérer manuellement dans le service
+    @Mapping(target = "city", ignore = true)
+    Review toEntity(ReviewResponse dto);
+}*/

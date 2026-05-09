@@ -40,9 +40,9 @@ public class User extends BaseAuditEntity {
 
     /* Vibes that belongs to this user*/
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE})
-    private Set<Cityvibe> cityvibe;
+    private Set<Cityvibe> cityvibes;
 
     /* Reviews that belong to this user*/
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private List<Review> reviews;
 }

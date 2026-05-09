@@ -1,7 +1,7 @@
 package com.cityVibes.feature.city;
 
 import com.cityVibes.common.response.ApiResponse;
-import com.cityVibes.feature.city.dto.CityDetail;
+import com.cityVibes.feature.city.dto.response.CityResponseRecord;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +26,8 @@ public class CityController {
      * @return A list of cities
      */
     @GetMapping("/all")
-    public ResponseEntity<ApiResponse<List<CityDetail>>> findAllCities() {
-        List<CityDetail> data = cityService.findAllCities();
+    public ResponseEntity<ApiResponse<List<CityResponseRecord>>> findAllCities() {
+        List<CityResponseRecord> data = cityService.findAllCities();
         return ResponseEntity.ok(ApiResponse.success(data, "Cities retrieved successfully"));
     }
 
@@ -38,10 +38,10 @@ public class CityController {
      * @return A city
      */
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<CityDetail>> findCity(@PathVariable Long id) {
-        CityDetail data = cityService.findCityById(id);
+    public ResponseEntity<ApiResponse<CityResponseRecord>> findCity(
+            @PathVariable Long id
+    ) {
+        CityResponseRecord data = cityService.findCityById(id);
         return ResponseEntity.ok(ApiResponse.success(data, "City details retrieved"));
     }
-
-
 }

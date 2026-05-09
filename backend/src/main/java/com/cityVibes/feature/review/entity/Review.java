@@ -34,7 +34,7 @@ public class Review extends BaseAuditEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User users;
+    private User user;
 
     /* Many reviews can belong to one city*/
     @ManyToOne(fetch = FetchType.LAZY)
